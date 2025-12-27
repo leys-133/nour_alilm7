@@ -1,0 +1,1277 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="منصة إسلامية تعليمية متكاملة لحلقات القرآن والعلوم الشرعية">
+    <meta name="theme-color" content="#1a7a5c">
+    <title>منصة نور العلم - Islamic LMS</title>
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml"
+        href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🕌</text></svg>">
+
+    <!-- Google Fonts - Tajawal -->
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800&display=swap"
+        rel="stylesheet">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+
+<body>
+    <!-- Loading Screen -->
+    <div id="loading-screen" class="loading-screen">
+        <div class="loader">
+            <div class="loader-icon">
+                <i class="fas fa-mosque"></i>
+            </div>
+            <h2>منصة نور العلم</h2>
+            <p>جارٍ التحميل...</p>
+        </div>
+    </div>
+
+    <!-- Main App Container -->
+    <div id="app" class="app-container hidden">
+
+        <!-- ==================== AUTH SECTION ==================== -->
+        <section id="auth-section" class="auth-section">
+            <div class="auth-background">
+                <div class="geometric-pattern"></div>
+            </div>
+
+            <div class="auth-container">
+                <!-- Welcome Screen -->
+                <div id="welcome-screen" class="auth-card">
+                    <div class="auth-logo">
+                        <i class="fas fa-mosque"></i>
+                    </div>
+                    <h1>منصة نور العلم</h1>
+                    <p class="auth-subtitle">منصة تعليمية إسلامية متكاملة لحلقات القرآن والعلوم الشرعية</p>
+
+                    <div class="auth-buttons">
+                        <button class="btn btn-primary btn-lg" onclick="showLoginForm()">
+                            <i class="fas fa-sign-in-alt"></i>
+                            تسجيل الدخول
+                        </button>
+                        <button class="btn btn-outline btn-lg" onclick="showRegisterForm()">
+                            <i class="fas fa-user-plus"></i>
+                            إنشاء حساب جديد
+                        </button>
+                    </div>
+
+                    <div class="auth-features">
+                        <div class="feature-item">
+                            <i class="fas fa-quran"></i>
+                            <span>القرآن الكريم</span>
+                        </div>
+                        <div class="feature-item">
+                            <i class="fas fa-book-open"></i>
+                            <span>الحديث الشريف</span>
+                        </div>
+                        <div class="feature-item">
+                            <i class="fas fa-video"></i>
+                            <span>دروس مرئية</span>
+                        </div>
+                        <div class="feature-item">
+                            <i class="fas fa-chart-line"></i>
+                            <span>تقارير ذكية</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Login Form -->
+                <div id="login-form" class="auth-card hidden">
+                    <button class="btn-back" onclick="showWelcome()">
+                        <i class="fas fa-arrow-right"></i>
+                    </button>
+
+                    <div class="auth-logo small">
+                        <i class="fas fa-sign-in-alt"></i>
+                    </div>
+                    <h2>تسجيل الدخول</h2>
+                    <p class="auth-subtitle">أدخل بياناتك للوصول إلى حسابك</p>
+
+                    <form id="login-form-element" onsubmit="handleLogin(event)">
+                        <div class="form-group">
+                            <label for="login-email">البريد الإلكتروني</label>
+                            <div class="input-icon">
+                                <i class="fas fa-envelope"></i>
+                                <input type="email" id="login-email" required placeholder="example@email.com">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="login-password">كلمة المرور</label>
+                            <div class="input-icon">
+                                <i class="fas fa-lock"></i>
+                                <input type="password" id="login-password" required placeholder="••••••••">
+                                <button type="button" class="toggle-password"
+                                    onclick="togglePassword('login-password')">
+                                    <i class="fas fa-eye"></i>
+                                </button>
+                            </div>
+                        </div>
+
+                        <div id="login-error" class="error-message hidden"></div>
+
+                        <button type="submit" class="btn btn-primary btn-block">
+                            <i class="fas fa-sign-in-alt"></i>
+                            دخول
+                        </button>
+                    </form>
+
+                    <p class="auth-switch">
+                        ليس لديك حساب؟
+                        <a href="#" onclick="showRegisterForm()">إنشاء حساب جديد</a>
+                    </p>
+                </div>
+
+                <!-- Register Form -->
+                <div id="register-form" class="auth-card hidden">
+                    <button class="btn-back" onclick="showWelcome()">
+                        <i class="fas fa-arrow-right"></i>
+                    </button>
+
+                    <div class="auth-logo small">
+                        <i class="fas fa-user-plus"></i>
+                    </div>
+                    <h2>إنشاء حساب جديد</h2>
+                    <p class="auth-subtitle">انضم إلى منصة نور العلم</p>
+
+                    <form id="register-form-element" onsubmit="handleRegister(event)">
+                        <div class="form-group">
+                            <label for="register-name">الاسم الكامل</label>
+                            <div class="input-icon">
+                                <i class="fas fa-user"></i>
+                                <input type="text" id="register-name" required placeholder="أدخل اسمك الكامل">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="register-email">البريد الإلكتروني</label>
+                            <div class="input-icon">
+                                <i class="fas fa-envelope"></i>
+                                <input type="email" id="register-email" required placeholder="example@email.com">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="register-password">كلمة المرور</label>
+                            <div class="input-icon">
+                                <i class="fas fa-lock"></i>
+                                <input type="password" id="register-password" required placeholder="••••••••"
+                                    minlength="6">
+                                <button type="button" class="toggle-password"
+                                    onclick="togglePassword('register-password')">
+                                    <i class="fas fa-eye"></i>
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label>نوع الحساب</label>
+                            <div class="account-type-selector">
+                                <label class="type-option">
+                                    <input type="radio" name="account-type" value="student" checked>
+                                    <div class="type-card">
+                                        <i class="fas fa-user-graduate"></i>
+                                        <span>طالب</span>
+                                    </div>
+                                </label>
+                                <label class="type-option">
+                                    <input type="radio" name="account-type" value="teacher">
+                                    <div class="type-card">
+                                        <i class="fas fa-chalkboard-teacher"></i>
+                                        <span>أستاذ</span>
+                                    </div>
+                                </label>
+                            </div>
+                        </div>
+
+                        <!-- Teacher Secret Code -->
+                        <div id="teacher-code-section" class="form-group hidden">
+                            <label for="teacher-code">الرمز السري للأستاذ</label>
+                            <div class="input-icon">
+                                <i class="fas fa-key"></i>
+                                <input type="password" id="teacher-code" placeholder="أدخل الرمز السري">
+                            </div>
+                            <small class="form-hint">يُطلب هذا الرمز للتحقق من صفة الأستاذ</small>
+                        </div>
+
+                        <div id="register-error" class="error-message hidden"></div>
+
+                        <button type="submit" class="btn btn-primary btn-block">
+                            <i class="fas fa-user-plus"></i>
+                            إنشاء الحساب
+                        </button>
+                    </form>
+
+                    <p class="auth-switch">
+                        لديك حساب بالفعل؟
+                        <a href="#" onclick="showLoginForm()">تسجيل الدخول</a>
+                    </p>
+                </div>
+            </div>
+
+            <!-- Auth Credit -->
+            <div class="auth-credit">
+                <p>برمجة المطور ليث &copy; 2025</p>
+            </div>
+        </section>
+
+        <!-- ==================== STUDENT DASHBOARD ==================== -->
+        <section id="student-dashboard" class="dashboard-section hidden">
+            <!-- Sidebar -->
+            <aside class="sidebar">
+                <div class="sidebar-header">
+                    <div class="logo">
+                        <i class="fas fa-mosque"></i>
+                        <span>نور العلم</span>
+                    </div>
+                </div>
+
+                <nav class="sidebar-nav">
+                    <a href="#" class="nav-item active" data-section="student-home">
+                        <i class="fas fa-home"></i>
+                        <span>الرئيسية</span>
+                    </a>
+                    <a href="#" class="nav-item" data-section="quran-section">
+                        <i class="fas fa-quran"></i>
+                        <span>القرآن الكريم</span>
+                    </a>
+                    <a href="#" class="nav-item" data-section="hadith-section">
+                        <i class="fas fa-book-open"></i>
+                        <span>الحديث الشريف</span>
+                    </a>
+                    <a href="#" class="nav-item" data-section="lessons-section">
+                        <i class="fas fa-video"></i>
+                        <span>الدروس المرئية</span>
+                    </a>
+                    <a href="#" class="nav-item" data-section="reports-section">
+                        <i class="fas fa-file-alt"></i>
+                        <span>التقارير</span>
+                    </a>
+                    <a href="#" class="nav-item" data-section="rewards-section">
+                        <i class="fas fa-trophy"></i>
+                        <span>المكافآت</span>
+                    </a>
+                    <a href="#" class="nav-item" data-section="messages-section">
+                        <i class="fas fa-envelope"></i>
+                        <span>الرسائل</span>
+                        <span class="badge" id="student-messages-badge"></span>
+                    </a>
+                </nav>
+
+                <div class="sidebar-footer">
+                    <div class="user-info">
+                        <div class="avatar">
+                            <i class="fas fa-user-graduate"></i>
+                        </div>
+                        <div class="user-details">
+                            <span class="user-name" id="student-name">الطالب</span>
+                            <span class="user-role">طالب</span>
+                        </div>
+                    </div>
+                    <button class="btn-logout" onclick="handleLogout()">
+                        <i class="fas fa-sign-out-alt"></i>
+                    </button>
+                </div>
+            </aside>
+
+            <!-- Main Content -->
+            <main class="main-content">
+                <!-- Top Bar -->
+                <header class="top-bar">
+                    <button class="menu-toggle" onclick="toggleSidebar()">
+                        <i class="fas fa-bars"></i>
+                    </button>
+                    <div class="page-title">
+                        <h1 id="current-page-title">الرئيسية</h1>
+                    </div>
+                    <div class="top-bar-actions">
+                        <button class="theme-toggle" onclick="toggleTheme()" title="تبديل الوضع المظلم"></button>
+                        <div class="connection-status" id="connection-status">
+                            <i class="fas fa-link-slash"></i>
+                            <span>غير مرتبط</span>
+                        </div>
+                    </div>
+                </header>
+
+                <!-- Content Sections -->
+                <div class="content-wrapper">
+
+                    <!-- Student Home -->
+                    <div id="student-home" class="content-section active">
+                        <!-- Join Room Card (if not connected) -->
+                        <div id="join-room-card" class="card join-room-card">
+                            <div class="card-icon">
+                                <i class="fas fa-link"></i>
+                            </div>
+                            <h3>الربط بالأستاذ</h3>
+                            <p>أدخل رمز الحلقة الخاص بأستاذك للانضمام</p>
+                            <div class="room-code-input">
+                                <input type="text" id="room-code" placeholder="أدخل رمز الحلقة" maxlength="6">
+                                <button class="btn btn-primary" onclick="joinRoom()">
+                                    <i class="fas fa-check"></i>
+                                    انضمام
+                                </button>
+                            </div>
+                            <div id="room-error" class="error-message hidden"></div>
+
+                            <div class="room-info-hint">
+                                <i class="fas fa-info-circle"></i>
+                                <span>ملاحظة: تأكد من أن الأستاذ مسجل في نفس هذا المتصفح (المتصفحات لا تشارك البيانات
+                                    المحلية بين بعضها).</span>
+                            </div>
+                        </div>
+
+                        <!-- Connected Info -->
+                        <div id="connected-info" class="card connected-card hidden">
+                            <div class="connected-header">
+                                <i class="fas fa-check-circle"></i>
+                                <h3>مرتبط بالأستاذ</h3>
+                            </div>
+                            <div class="teacher-info">
+                                <div class="avatar">
+                                    <i class="fas fa-chalkboard-teacher"></i>
+                                </div>
+                                <div class="details">
+                                    <span class="name" id="connected-teacher-name">اسم الأستاذ</span>
+                                    <span class="code">رمز الحلقة: <strong id="connected-room-code"></strong></span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Stats Cards -->
+                        <div class="stats-grid">
+                            <div class="stat-card quran-stat">
+                                <div class="stat-icon">
+                                    <i class="fas fa-quran"></i>
+                                </div>
+                                <div class="stat-info">
+                                    <span class="stat-value" id="quran-progress">0%</span>
+                                    <span class="stat-label">تقدم الحفظ</span>
+                                </div>
+                            </div>
+                            <div class="stat-card hadith-stat">
+                                <div class="stat-icon">
+                                    <i class="fas fa-book-open"></i>
+                                </div>
+                                <div class="stat-info">
+                                    <span class="stat-value" id="hadith-count">0</span>
+                                    <span class="stat-label">حديث محفوظ</span>
+                                </div>
+                            </div>
+                            <div class="stat-card lessons-stat">
+                                <div class="stat-icon">
+                                    <i class="fas fa-video"></i>
+                                </div>
+                                <div class="stat-info">
+                                    <span class="stat-value" id="lessons-watched">0</span>
+                                    <span class="stat-label">درس مشاهد</span>
+                                </div>
+                            </div>
+                            <div class="stat-card reports-stat">
+                                <div class="stat-icon">
+                                    <i class="fas fa-file-alt"></i>
+                                </div>
+                                <div class="stat-info">
+                                    <span class="stat-value" id="reports-sent">0</span>
+                                    <span class="stat-label">تقرير مُرسل</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Progress Chart -->
+                        <div class="card chart-card">
+                            <div class="card-header">
+                                <h3><i class="fas fa-chart-line"></i> تقدمك الأسبوعي</h3>
+                            </div>
+                            <div class="chart-container">
+                                <canvas id="weekly-progress-chart"></canvas>
+                            </div>
+                        </div>
+
+                        <!-- Recent Activity -->
+                        <div class="card">
+                            <div class="card-header">
+                                <h3><i class="fas fa-history"></i> آخر النشاطات</h3>
+                            </div>
+                            <div class="activity-list" id="recent-activity">
+                                <div class="empty-state">
+                                    <i class="fas fa-clock"></i>
+                                    <p>لا توجد نشاطات حديثة</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Quran Section -->
+                    <div id="quran-section" class="content-section">
+                        <div class="section-header">
+                            <h2><i class="fas fa-quran"></i> القرآن الكريم</h2>
+                            <div class="section-actions">
+                                <button class="btn btn-outline" onclick="showQuranTest()">
+                                    <i class="fas fa-question-circle"></i>
+                                    اختبار ذاتي
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Quran Progress Overview -->
+                        <div class="quran-overview">
+                            <div class="progress-circle-container">
+                                <div class="progress-circle" id="quran-progress-circle">
+                                    <svg viewBox="0 0 100 100">
+                                        <circle class="progress-bg" cx="50" cy="50" r="45"></circle>
+                                        <circle class="progress-bar" cx="50" cy="50" r="45" id="quran-circle-progress">
+                                        </circle>
+                                    </svg>
+                                    <div class="progress-text">
+                                        <span class="percentage" id="quran-percentage">0%</span>
+                                        <span class="label">مكتمل</span>
+                                    </div>
+                                </div>
+                                <div class="progress-stats">
+                                    <div class="stat">
+                                        <span class="value" id="memorized-surahs">0</span>
+                                        <span class="label">سورة محفوظة</span>
+                                    </div>
+                                    <div class="stat">
+                                        <span class="value" id="memorized-juz">0</span>
+                                        <span class="label">جزء مكتمل</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Surah Grid -->
+                        <div class="card">
+                            <div class="card-header">
+                                <h3>سور القرآن الكريم</h3>
+                                <div class="filter-tabs">
+                                    <button class="tab active" data-filter="all">الكل</button>
+                                    <button class="tab" data-filter="memorized">المحفوظ</button>
+                                    <button class="tab" data-filter="in-progress">قيد الحفظ</button>
+                                    <button class="tab" data-filter="not-started">لم يبدأ</button>
+                                </div>
+                            </div>
+                            <div class="surah-grid" id="surah-grid">
+                                <!-- Surahs will be loaded here -->
+                            </div>
+                        </div>
+
+                        <!-- Quran Reader Modal -->
+                        <div id="quran-reader-modal" class="modal hidden">
+                            <div class="modal-content large">
+                                <div class="modal-header">
+                                    <h3 id="reader-surah-name">سورة الفاتحة</h3>
+                                    <button class="modal-close" onclick="closeQuranReader()">
+                                        <i class="fas fa-times"></i>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="quran-reader" id="quran-reader-content">
+                                        <!-- Quran text will be loaded here -->
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button class="btn btn-outline" onclick="markAsReviewed()">
+                                        <i class="fas fa-eye"></i>
+                                        تمت المراجعة
+                                    </button>
+                                    <button class="btn btn-primary" onclick="markAsMemorized()">
+                                        <i class="fas fa-check"></i>
+                                        تم الحفظ
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Quran Test Modal -->
+                        <div id="quran-test-modal" class="modal hidden">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h3><i class="fas fa-question-circle"></i> اختبار ذاتي</h3>
+                                    <button class="modal-close" onclick="closeQuranTest()">
+                                        <i class="fas fa-times"></i>
+                                    </button>
+                                </div>
+                                <div class="modal-body" id="quran-test-content">
+                                    <!-- Test content will be loaded here -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Hadith Section -->
+                    <div id="hadith-section" class="content-section">
+                        <div class="section-header">
+                            <h2><i class="fas fa-book-open"></i> الحديث الشريف</h2>
+                            <div class="section-actions">
+                                <button class="btn btn-outline" onclick="showHadithTest()">
+                                    <i class="fas fa-question-circle"></i>
+                                    اختبار ذاتي
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Hadith Stats -->
+                        <div class="hadith-stats">
+                            <div class="stat-card">
+                                <i class="fas fa-book"></i>
+                                <div class="info">
+                                    <span class="value" id="total-hadiths">40</span>
+                                    <span class="label">الأحاديث الكلية</span>
+                                </div>
+                            </div>
+                            <div class="stat-card">
+                                <i class="fas fa-check-double"></i>
+                                <div class="info">
+                                    <span class="value" id="memorized-hadiths">0</span>
+                                    <span class="label">المحفوظ</span>
+                                </div>
+                            </div>
+                            <div class="stat-card">
+                                <i class="fas fa-star"></i>
+                                <div class="info">
+                                    <span class="value" id="mastery-level">0%</span>
+                                    <span class="label">مستوى الإتقان</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Hadith List -->
+                        <div class="card">
+                            <div class="card-header">
+                                <h3>الأربعون النووية</h3>
+                            </div>
+                            <div class="hadith-list" id="hadith-list">
+                                <!-- Hadiths will be loaded here -->
+                            </div>
+                        </div>
+
+                        <!-- Hadith Detail Modal -->
+                        <div id="hadith-modal" class="modal hidden">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h3 id="hadith-modal-title">الحديث</h3>
+                                    <button class="modal-close" onclick="closeHadithModal()">
+                                        <i class="fas fa-times"></i>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="hadith-content" id="hadith-modal-content">
+                                        <!-- Hadith content -->
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button class="btn btn-primary" onclick="markHadithMemorized()">
+                                        <i class="fas fa-check"></i>
+                                        تم الحفظ
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Hadith Test Modal -->
+                        <div id="hadith-test-modal" class="modal hidden">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h3><i class="fas fa-question-circle"></i> اختبار الحديث</h3>
+                                    <button class="modal-close" onclick="closeHadithTest()">
+                                        <i class="fas fa-times"></i>
+                                    </button>
+                                </div>
+                                <div class="modal-body" id="hadith-test-content">
+                                    <!-- Test content -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Lessons Section -->
+                    <div id="lessons-section" class="content-section">
+                        <div class="section-header">
+                            <h2><i class="fas fa-video"></i> الدروس المرئية</h2>
+                        </div>
+
+                        <!-- Lessons Grid -->
+                        <div class="lessons-grid" id="lessons-grid">
+                            <div class="empty-state" id="no-lessons">
+                                <i class="fas fa-video-slash"></i>
+                                <p>لا توجد دروس متاحة حالياً</p>
+                                <small>سيقوم الأستاذ بإضافة الدروس قريباً</small>
+                            </div>
+                        </div>
+
+                        <!-- Video Player Modal -->
+                        <div id="video-modal" class="modal hidden">
+                            <div class="modal-content large">
+                                <div class="modal-header">
+                                    <h3 id="video-title">عنوان الدرس</h3>
+                                    <button class="modal-close" onclick="closeVideoModal()">
+                                        <i class="fas fa-times"></i>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="video-container" id="video-container">
+                                        <!-- YouTube iframe will be inserted here -->
+                                    </div>
+                                    <div class="video-description" id="video-description"></div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button class="btn btn-primary" onclick="markLessonWatched()">
+                                        <i class="fas fa-check"></i>
+                                        تم المشاهدة
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Reports Section -->
+                    <div id="reports-section" class="content-section">
+                        <div class="section-header">
+                            <h2><i class="fas fa-file-alt"></i> التقارير</h2>
+                            <div class="section-actions">
+                                <button class="btn btn-primary" onclick="showNewReportForm()">
+                                    <i class="fas fa-plus"></i>
+                                    تقرير جديد
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Reports Tabs -->
+                        <div class="tabs-container">
+                            <button class="tab active" onclick="showReportsTab('my-reports')">تقاريري</button>
+                            <button class="tab" onclick="showReportsTab('feedback')">التقييمات</button>
+                        </div>
+
+                        <!-- My Reports -->
+                        <div id="my-reports" class="tab-content active">
+                            <div class="reports-list" id="student-reports-list">
+                                <div class="empty-state">
+                                    <i class="fas fa-file-alt"></i>
+                                    <p>لم ترسل أي تقارير بعد</p>
+                                    <button class="btn btn-primary" onclick="showNewReportForm()">
+                                        <i class="fas fa-plus"></i>
+                                        إنشاء تقرير
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Feedback -->
+                        <div id="feedback" class="tab-content hidden">
+                            <div class="feedback-list" id="feedback-list">
+                                <div class="empty-state">
+                                    <i class="fas fa-comments"></i>
+                                    <p>لا توجد تقييمات بعد</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- New Report Modal -->
+                        <div id="new-report-modal" class="modal hidden">
+                            <div class="modal-content large">
+                                <div class="modal-header">
+                                    <h3><i class="fas fa-edit"></i> تقرير جديد</h3>
+                                    <button class="modal-close" onclick="closeReportModal()">
+                                        <i class="fas fa-times"></i>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <form id="report-form" onsubmit="submitReport(event)">
+                                        <div class="form-section">
+                                            <h4><i class="fas fa-quran"></i> القرآن الكريم</h4>
+                                            <div class="form-group">
+                                                <label>ماذا حفظت اليوم؟</label>
+                                                <select id="report-surah" class="form-select">
+                                                    <option value="">اختر السورة</option>
+                                                </select>
+                                            </div>
+                                            <div class="form-row">
+                                                <div class="form-group">
+                                                    <label>من آية</label>
+                                                    <input type="number" id="report-ayah-from" min="1" placeholder="1">
+                                                </div>
+                                                <div class="form-group">
+                                                    <label>إلى آية</label>
+                                                    <input type="number" id="report-ayah-to" min="1" placeholder="7">
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-section">
+                                            <h4><i class="fas fa-book-open"></i> الحديث الشريف</h4>
+                                            <div class="form-group">
+                                                <label>عدد الأحاديث المحفوظة اليوم</label>
+                                                <input type="number" id="report-hadith-count" min="0" placeholder="0">
+                                            </div>
+                                        </div>
+
+                                        <div class="form-section">
+                                            <h4><i class="fas fa-video"></i> الدروس المشاهدة</h4>
+                                            <div class="form-group">
+                                                <label>عدد الدروس المشاهدة</label>
+                                                <input type="number" id="report-lessons-count" min="0" placeholder="0">
+                                            </div>
+                                        </div>
+
+                                        <div class="form-section">
+                                            <h4><i class="fas fa-comment"></i> ملاحظاتك</h4>
+                                            <div class="form-group">
+                                                <label>اكتب ملاحظاتك وانعكاسك الشخصي</label>
+                                                <textarea id="report-notes" rows="4"
+                                                    placeholder="ما الذي تعلمته اليوم؟ ما التحديات التي واجهتك؟"></textarea>
+                                            </div>
+                                        </div>
+
+                                        <button type="submit" class="btn btn-primary btn-block">
+                                            <i class="fas fa-paper-plane"></i>
+                                            إرسال التقرير
+                                        </button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Rewards Section -->
+                    <div id="rewards-section" class="content-section">
+                        <div class="section-header">
+                            <h2><i class="fas fa-trophy"></i> نظام التحفيز والمكافآت</h2>
+                        </div>
+
+                        <!-- Rewards Info -->
+                        <div class="rewards-hero">
+                            <div class="rewards-icon">
+                                <i class="fas fa-award"></i>
+                            </div>
+                            <h3>كن الطالب المتميز!</h3>
+                            <p>يتم اختيار أكثر طالب مجتهد كل ثلاثة أشهر بناءً على نشاطه والتزامه</p>
+                        </div>
+
+                        <!-- Prize Info -->
+                        <div class="card prize-card">
+                            <div class="prize-icon">
+                                <i class="fas fa-gift"></i>
+                            </div>
+                            <h4>المكافأة</h4>
+                            <p>تطبيق مجاني مبرمج خصيصاً للفائز</p>
+                            <div class="contact-info">
+                                <i class="fab fa-whatsapp"></i>
+                                <span>للتواصل: <a href="https://wa.me/905068522765" target="_blank">+90 506 852
+                                        2765</a></span>
+                            </div>
+                        </div>
+
+                        <!-- Leaderboard -->
+                        <div class="card">
+                            <div class="card-header">
+                                <h3><i class="fas fa-medal"></i> لوحة المتصدرين</h3>
+                            </div>
+                            <div class="leaderboard" id="leaderboard">
+                                <!-- Leaderboard will be loaded here -->
+                            </div>
+                        </div>
+
+                        <!-- Your Rank -->
+                        <div class="card your-rank-card">
+                            <h4>ترتيبك الحالي</h4>
+                            <div class="rank-display">
+                                <span class="rank-number" id="your-rank">#-</span>
+                                <span class="rank-points" id="your-points">0 نقطة</span>
+                            </div>
+                            <button class="btn btn-outline" onclick="shareMyProgress()" style="margin-top: 1rem;">
+                                <i class="fas fa-share-alt"></i>
+                                شارك تقدمك
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Messages Section -->
+                    <div id="messages-section" class="content-section">
+                        <div class="section-header">
+                            <h2><i class="fas fa-envelope"></i> الرسائل</h2>
+                        </div>
+
+                        <div class="messages-list" id="student-messages-list">
+                            <div class="empty-state">
+                                <i class="fas fa-envelope-open"></i>
+                                <p>لا توجد رسائل</p>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <!-- Footer -->
+                <footer class="app-footer">
+                    <p>تم برمجة هذا التطبيق من قبل المطور ليث &copy; 2025 - جميع الحقوق محفوظة</p>
+                </footer>
+            </main>
+        </section>
+
+        <!-- ==================== TEACHER DASHBOARD ==================== -->
+        <section id="teacher-dashboard" class="dashboard-section hidden">
+            <!-- Sidebar -->
+            <aside class="sidebar teacher-sidebar">
+                <div class="sidebar-header">
+                    <div class="logo">
+                        <i class="fas fa-mosque"></i>
+                        <span>نور العلم</span>
+                    </div>
+                </div>
+
+                <nav class="sidebar-nav">
+                    <a href="#" class="nav-item active" data-section="teacher-home">
+                        <i class="fas fa-home"></i>
+                        <span>الرئيسية</span>
+                    </a>
+                    <a href="#" class="nav-item" data-section="students-section">
+                        <i class="fas fa-users"></i>
+                        <span>الطلاب</span>
+                    </a>
+                    <a href="#" class="nav-item" data-section="teacher-reports-section">
+                        <i class="fas fa-file-alt"></i>
+                        <span>التقارير</span>
+                        <span class="badge" id="teacher-reports-badge"></span>
+                    </a>
+                    <a href="#" class="nav-item" data-section="add-lessons-section">
+                        <i class="fas fa-video"></i>
+                        <span>إدارة الدروس</span>
+                    </a>
+                    <a href="#" class="nav-item" data-section="teacher-messages-section">
+                        <i class="fas fa-paper-plane"></i>
+                        <span>الرسائل</span>
+                    </a>
+                    <a href="#" class="nav-item" data-section="statistics-section">
+                        <i class="fas fa-chart-bar"></i>
+                        <span>الإحصائيات</span>
+                    </a>
+                </nav>
+
+                <div class="sidebar-footer">
+                    <div class="user-info">
+                        <div class="avatar teacher-avatar">
+                            <i class="fas fa-chalkboard-teacher"></i>
+                        </div>
+                        <div class="user-details">
+                            <span class="user-name" id="teacher-name">الأستاذ</span>
+                            <span class="user-role">أستاذ</span>
+                        </div>
+                    </div>
+                    <button class="btn-logout" onclick="handleLogout()">
+                        <i class="fas fa-sign-out-alt"></i>
+                    </button>
+                </div>
+            </aside>
+
+            <!-- Main Content -->
+            <main class="main-content">
+                <!-- Top Bar -->
+                <header class="top-bar">
+                    <button class="menu-toggle" onclick="toggleSidebar()">
+                        <i class="fas fa-bars"></i>
+                    </button>
+                    <div class="page-title">
+                        <h1 id="teacher-page-title">الرئيسية</h1>
+                    </div>
+                    <div class="top-bar-actions">
+                        <button class="theme-toggle" onclick="toggleTheme()" title="تبديل الوضع المظلم"></button>
+                        <div class="room-code-display">
+                            <span>رمز الحلقة:</span>
+                            <strong id="teacher-room-code">----</strong>
+                            <button class="btn-icon" onclick="copyRoomCode()" title="نسخ الرمز">
+                                <i class="fas fa-copy"></i>
+                            </button>
+                        </div>
+                    </div>
+                </header>
+
+                <!-- Content Sections -->
+                <div class="content-wrapper">
+
+                    <!-- Teacher Home -->
+                    <div id="teacher-home" class="content-section active">
+                        <!-- Stats Cards -->
+                        <div class="stats-grid">
+                            <div class="stat-card students-stat">
+                                <div class="stat-icon">
+                                    <i class="fas fa-users"></i>
+                                </div>
+                                <div class="stat-info">
+                                    <span class="stat-value" id="total-students">0</span>
+                                    <span class="stat-label">طالب مسجل</span>
+                                </div>
+                            </div>
+                            <div class="stat-card reports-stat">
+                                <div class="stat-icon">
+                                    <i class="fas fa-file-alt"></i>
+                                </div>
+                                <div class="stat-info">
+                                    <span class="stat-value" id="pending-reports">0</span>
+                                    <span class="stat-label">تقرير بانتظار المراجعة</span>
+                                </div>
+                            </div>
+                            <div class="stat-card lessons-stat">
+                                <div class="stat-icon">
+                                    <i class="fas fa-video"></i>
+                                </div>
+                                <div class="stat-info">
+                                    <span class="stat-value" id="total-lessons">0</span>
+                                    <span class="stat-label">درس مضاف</span>
+                                </div>
+                            </div>
+                            <div class="stat-card active-stat">
+                                <div class="stat-icon">
+                                    <i class="fas fa-user-check"></i>
+                                </div>
+                                <div class="stat-info">
+                                    <span class="stat-value" id="active-students">0</span>
+                                    <span class="stat-label">طالب نشط هذا الأسبوع</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Overview Charts -->
+                        <div class="charts-row">
+                            <div class="card chart-card">
+                                <div class="card-header">
+                                    <h3><i class="fas fa-chart-pie"></i> توزيع تقدم الطلاب</h3>
+                                </div>
+                                <div class="chart-container">
+                                    <canvas id="students-progress-chart"></canvas>
+                                </div>
+                            </div>
+                            <div class="card chart-card">
+                                <div class="card-header">
+                                    <h3><i class="fas fa-chart-line"></i> النشاط الأسبوعي</h3>
+                                </div>
+                                <div class="chart-container">
+                                    <canvas id="weekly-activity-chart"></canvas>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Recent Reports -->
+                        <div class="card">
+                            <div class="card-header">
+                                <h3><i class="fas fa-clock"></i> آخر التقارير</h3>
+                                <a href="#" onclick="navigateToSection('teacher-reports-section')" class="view-all">عرض
+                                    الكل</a>
+                            </div>
+                            <div class="reports-preview" id="recent-reports-preview">
+                                <div class="empty-state">
+                                    <i class="fas fa-file-alt"></i>
+                                    <p>لا توجد تقارير حديثة</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Students Section -->
+                    <div id="students-section" class="content-section">
+                        <div class="section-header">
+                            <h2><i class="fas fa-users"></i> الطلاب</h2>
+                        </div>
+
+                        <!-- Search -->
+                        <div class="search-bar">
+                            <i class="fas fa-search"></i>
+                            <input type="text" id="student-search" placeholder="البحث عن طالب..."
+                                oninput="searchStudents()">
+                        </div>
+
+                        <!-- Students Grid -->
+                        <div class="students-grid" id="students-grid">
+                            <div class="empty-state">
+                                <i class="fas fa-users"></i>
+                                <p>لا يوجد طلاب مسجلين بعد</p>
+                                <small>شارك رمز الحلقة مع طلابك للانضمام</small>
+                            </div>
+                        </div>
+
+                        <!-- Student Detail Modal -->
+                        <div id="student-detail-modal" class="modal hidden">
+                            <div class="modal-content large">
+                                <div class="modal-header">
+                                    <h3 id="student-detail-name">اسم الطالب</h3>
+                                    <button class="modal-close" onclick="closeStudentDetail()">
+                                        <i class="fas fa-times"></i>
+                                    </button>
+                                </div>
+                                <div class="modal-body" id="student-detail-content">
+                                    <!-- Student details will be loaded here -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Teacher Reports Section -->
+                    <div id="teacher-reports-section" class="content-section">
+                        <div class="section-header">
+                            <h2><i class="fas fa-file-alt"></i> تقارير الطلاب</h2>
+                        </div>
+
+                        <!-- Filter Tabs -->
+                        <div class="tabs-container">
+                            <button class="tab active" onclick="filterTeacherReports('pending')">بانتظار
+                                المراجعة</button>
+                            <button class="tab" onclick="filterTeacherReports('reviewed')">تمت المراجعة</button>
+                            <button class="tab" onclick="filterTeacherReports('all')">الكل</button>
+                        </div>
+
+                        <!-- Reports List -->
+                        <div class="reports-list" id="teacher-reports-list">
+                            <div class="empty-state">
+                                <i class="fas fa-file-alt"></i>
+                                <p>لا توجد تقارير</p>
+                            </div>
+                        </div>
+
+                        <!-- Report Review Modal -->
+                        <div id="report-review-modal" class="modal hidden">
+                            <div class="modal-content large">
+                                <div class="modal-header">
+                                    <h3><i class="fas fa-file-alt"></i> مراجعة التقرير</h3>
+                                    <button class="modal-close" onclick="closeReportReview()">
+                                        <i class="fas fa-times"></i>
+                                    </button>
+                                </div>
+                                <div class="modal-body" id="report-review-content">
+                                    <!-- Report content will be loaded here -->
+                                </div>
+                                <div class="modal-footer">
+                                    <form id="review-form" onsubmit="submitReview(event)">
+                                        <div class="form-group">
+                                            <label>التقييم</label>
+                                            <div class="rating-input" id="rating-input">
+                                                <i class="fas fa-star" data-rating="1"></i>
+                                                <i class="fas fa-star" data-rating="2"></i>
+                                                <i class="fas fa-star" data-rating="3"></i>
+                                                <i class="fas fa-star" data-rating="4"></i>
+                                                <i class="fas fa-star" data-rating="5"></i>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label>ملاحظات الأستاذ</label>
+                                            <textarea id="review-notes" rows="3"
+                                                placeholder="اكتب ملاحظاتك للطالب..."></textarea>
+                                        </div>
+                                        <button type="submit" class="btn btn-primary">
+                                            <i class="fas fa-check"></i>
+                                            إرسال التقييم
+                                        </button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Add Lessons Section -->
+                    <div id="add-lessons-section" class="content-section">
+                        <div class="section-header">
+                            <h2><i class="fas fa-video"></i> إدارة الدروس</h2>
+                            <div class="section-actions">
+                                <button class="btn btn-primary" onclick="showAddLessonModal()">
+                                    <i class="fas fa-plus"></i>
+                                    إضافة درس
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Lessons List -->
+                        <div class="lessons-manage-grid" id="lessons-manage-grid">
+                            <div class="empty-state">
+                                <i class="fas fa-video"></i>
+                                <p>لم تضف أي دروس بعد</p>
+                                <button class="btn btn-primary" onclick="showAddLessonModal()">
+                                    <i class="fas fa-plus"></i>
+                                    إضافة درس
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Add Lesson Modal -->
+                        <div id="add-lesson-modal" class="modal hidden">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h3><i class="fas fa-plus-circle"></i> إضافة درس جديد</h3>
+                                    <button class="modal-close" onclick="closeAddLessonModal()">
+                                        <i class="fas fa-times"></i>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <form id="add-lesson-form" onsubmit="addLesson(event)">
+                                        <div class="form-group">
+                                            <label for="lesson-title">عنوان الدرس</label>
+                                            <input type="text" id="lesson-title" required
+                                                placeholder="أدخل عنوان الدرس">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="lesson-url">رابط يوتيوب</label>
+                                            <input type="url" id="lesson-url" required
+                                                placeholder="https://www.youtube.com/watch?v=...">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="lesson-description">الوصف</label>
+                                            <textarea id="lesson-description" rows="3"
+                                                placeholder="وصف مختصر للدرس"></textarea>
+                                        </div>
+                                        <button type="submit" class="btn btn-primary btn-block">
+                                            <i class="fas fa-plus"></i>
+                                            إضافة الدرس
+                                        </button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Teacher Messages Section -->
+                    <div id="teacher-messages-section" class="content-section">
+                        <div class="section-header">
+                            <h2><i class="fas fa-paper-plane"></i> إرسال رسالة</h2>
+                        </div>
+
+                        <!-- Message Form -->
+                        <div class="card">
+                            <form id="teacher-message-form" onsubmit="sendTeacherMessage(event)">
+                                <div class="form-group">
+                                    <label>اختر الطالب</label>
+                                    <select id="message-recipient" class="form-select" required>
+                                        <option value="">اختر طالباً</option>
+                                        <option value="all">جميع الطلاب</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label>عنوان الرسالة</label>
+                                    <input type="text" id="message-title" required placeholder="عنوان الرسالة">
+                                </div>
+                                <div class="form-group">
+                                    <label>نص الرسالة</label>
+                                    <textarea id="message-content" rows="5" required
+                                        placeholder="اكتب رسالتك هنا..."></textarea>
+                                </div>
+                                <button type="submit" class="btn btn-primary">
+                                    <i class="fas fa-paper-plane"></i>
+                                    إرسال الرسالة
+                                </button>
+                            </form>
+                        </div>
+
+                        <!-- Sent Messages -->
+                        <div class="card">
+                            <div class="card-header">
+                                <h3><i class="fas fa-history"></i> الرسائل المُرسلة</h3>
+                            </div>
+                            <div class="messages-list" id="sent-messages-list">
+                                <div class="empty-state">
+                                    <i class="fas fa-paper-plane"></i>
+                                    <p>لم ترسل أي رسائل بعد</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Statistics Section -->
+                    <div id="statistics-section" class="content-section">
+                        <div class="section-header">
+                            <h2><i class="fas fa-chart-bar"></i> الإحصائيات</h2>
+                        </div>
+
+                        <!-- Time Filter -->
+                        <div class="time-filter">
+                            <button class="tab active" onclick="filterStats('week')">أسبوعي</button>
+                            <button class="tab" onclick="filterStats('month')">شهري</button>
+                            <button class="tab" onclick="filterStats('quarter')">فصلي</button>
+                        </div>
+
+                        <!-- Charts -->
+                        <div class="charts-grid">
+                            <div class="card chart-card full-width">
+                                <div class="card-header">
+                                    <h3><i class="fas fa-chart-bar"></i> نشاط الطلاب</h3>
+                                </div>
+                                <div class="chart-container large">
+                                    <canvas id="students-activity-chart"></canvas>
+                                </div>
+                            </div>
+
+                            <div class="card chart-card">
+                                <div class="card-header">
+                                    <h3><i class="fas fa-quran"></i> تقدم حفظ القرآن</h3>
+                                </div>
+                                <div class="chart-container">
+                                    <canvas id="quran-stats-chart"></canvas>
+                                </div>
+                            </div>
+
+                            <div class="card chart-card">
+                                <div class="card-header">
+                                    <h3><i class="fas fa-book-open"></i> حفظ الحديث</h3>
+                                </div>
+                                <div class="chart-container">
+                                    <canvas id="hadith-stats-chart"></canvas>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Top Students -->
+                        <div class="card">
+                            <div class="card-header">
+                                <h3><i class="fas fa-trophy"></i> أفضل الطلاب</h3>
+                            </div>
+                            <div class="top-students-list" id="top-students-list">
+                                <!-- Top students will be loaded here -->
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <!-- Footer -->
+                <footer class="app-footer">
+                    <p>تم برمجة هذا التطبيق من قبل المطور ليث &copy; 2025 - جميع الحقوق محفوظة</p>
+                </footer>
+            </main>
+        </section>
+
+    </div>
+
+    <!-- Toast Notifications -->
+    <div id="toast-container" class="toast-container"></div>
+
+    <!-- Scripts -->
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-analytics-compat.js"></script>
+
+    <script src="data/quran-data.js"></script>
+    <script src="data/hadith-data.js"></script>
+    <script src="js/utils.js"></script>
+    <script src="js/cloud.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/student.js"></script>
+    <script src="js/teacher.js"></script>
+    <script src="js/quran.js"></script>
+    <script src="js/hadith.js"></script>
+    <script src="js/lessons.js"></script>
+    <script src="js/reports.js"></script>
+    <script src="js/charts.js"></script>
+    <script src="js/app.js"></script>
+</body>
+
+</html>
